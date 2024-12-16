@@ -35,12 +35,13 @@ def draw_det(
         draw_scores: bool = False,
         ovcolor: Tuple[int] = (0, 0, 0),
         replaceimg = None,
-        mosaicsize: int = 20
+        mosaicsize: int = 20,
+        blursize: int = 5
 ):
     if replacewith == 'solid':
         cv2.rectangle(frame, (x1, y1), (x2, y2), ovcolor, -1)
     elif replacewith == 'blur':
-        bf = 2  # blur factor (number of pixels in each dimension that the face will be reduced to)
+        bf = blursize  # blur factor (number of pixels in each dimension that the face will be reduced to)
         blurred_box =  cv2.blur(
             frame[y1:y2, x1:x2],
             (abs(x2 - x1) // bf, abs(y2 - y1) // bf)
@@ -78,7 +79,7 @@ def draw_det(
 
 def anonymize_frame(
         dets, frame, mask_scale,
-        replacewith, ellipse, draw_scores, replaceimg, mosaicsize
+        replacewith, ellipse, draw_scores, replaceimg, mosaicsize, blursize
 ):
     for i, det in enumerate(dets):
         boxes, score = det[:4], det[4]
@@ -93,7 +94,8 @@ def anonymize_frame(
             ellipse=ellipse,
             draw_scores=draw_scores,
             replaceimg=replaceimg,
-            mosaicsize=mosaicsize
+            mosaicsize=mosaicsize,
+            blursize=blursize
         )
 
 
@@ -118,6 +120,7 @@ def video_detect(
         replaceimg = None,
         keep_audio: bool = False,
         mosaicsize: int = 20,
+        blursize: int = 2,
         disable_progress_output = False
 ):
     try:
@@ -165,7 +168,7 @@ def video_detect(
         anonymize_frame(
             dets, frame, mask_scale=mask_scale,
             replacewith=replacewith, ellipse=ellipse, draw_scores=draw_scores,
-            replaceimg=replaceimg, mosaicsize=mosaicsize
+            replaceimg=replaceimg, mosaicsize=mosaicsize, blursize=blursize
         )
 
         if opath is not None:
@@ -196,6 +199,7 @@ def image_detect(
         keep_metadata: bool,
         replaceimg = None,
         mosaicsize: int = 20,
+        blursize: int = 2
 ):
     frame = iio.imread(ipath)
 
@@ -210,7 +214,7 @@ def image_detect(
     anonymize_frame(
         dets, frame, mask_scale=mask_scale,
         replacewith=replacewith, ellipse=ellipse, draw_scores=draw_scores,
-        replaceimg=replaceimg, mosaicsize=mosaicsize
+        replaceimg=replaceimg, mosaicsize=mosaicsize, blursize=blursize
     )
 
     if enable_preview:
@@ -306,6 +310,9 @@ def parse_cli_args():
         '--mosaicsize', default=20, type=int, metavar='width',
         help='Setting the mosaic size. Requires --replacewith mosaic option. Default: 20.')
     parser.add_argument(
+        '--blursize', default=2, type=float, metavar='M',
+        help='Scale factor for face blur, to make sure that makes blur the face. Default: 2.')
+    parser.add_argument(
         '--keep-audio', '-k', default=False, action='store_true',
         help='Keep audio from video source file and copy it over to the output (only applies to videos).')
     parser.add_argument(
@@ -368,6 +375,7 @@ def main():
     in_shape = args.scale
     execution_provider = args.execution_provider
     mosaicsize = args.mosaicsize
+    blursize = args.blursize
     keep_metadata = args.keep_metadata
     replaceimg = None
     disable_progress_output = args.disable_progress_output
@@ -417,6 +425,7 @@ def main():
                 ffmpeg_config=ffmpeg_config,
                 replaceimg=replaceimg,
                 mosaicsize=mosaicsize,
+                blursize=blursize,
                 disable_progress_output=disable_progress_output
             )
         elif filetype == 'image':
@@ -433,6 +442,7 @@ def main():
                 keep_metadata=keep_metadata,
                 replaceimg=replaceimg,
                 mosaicsize=mosaicsize
+                blursize=blursize,
             )
         elif filetype is None:
             print(f'Can\'t determine file type of file {ipath}. Skipping...')
