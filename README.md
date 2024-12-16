@@ -1,5 +1,7 @@
 [![PyPI](https://img.shields.io/pypi/v/deface)](https://pypi.org/project/deface/) [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ORB-HD/deface/python-publish.yml)](https://github.com/ORB-HD/deface/actions)
 
+(This project is forked from [ORB-HD/deface.](https://github.com/ORB-HD/deface/actions) If you need to control blur, try my project.)
+
 # `deface`: Video anonymization by face detection
 
 `deface` is a simple command-line tool for automatic anonymization of faces in videos or photos.
@@ -22,7 +24,7 @@ The recommended way of installing `deface` is via the `pip` package manager. Thi
 
 Alternatively, if you want to use the latest (unreleased) revision directly from GitHub, you can run:
 
-    $ python3 -m pip install 'git+https://github.com/ORB-HD/deface'
+    $ python3 -m pip install 'git+https://github.com/taniokah/deface'
 
 This will only install the dependencies that are strictly required for running the tool. If you want to speed up processing by enabling hardware acceleration, you will need to manually install additional packages, see [Hardware acceleration](#hardware-acceleration)
 
@@ -100,6 +102,8 @@ optional arguments:
                         --replacewith img option.
   --mosaicsize width    Setting the mosaic size. Requires --replacewith mosaic
                         option. Default: 20.
+  --blursize width      Setting the blur size. Requires --replacewith blur
+                        option. Default: 2.
   --keep-audio, -k      Keep audio from video source file and copy it over to
                         the output (only applies to videos).
   --ffmpeg-config FFMPEG_CONFIG
