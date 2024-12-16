@@ -36,12 +36,12 @@ def draw_det(
         ovcolor: Tuple[int] = (0, 0, 0),
         replaceimg = None,
         mosaicsize: int = 20,
-        blursize: int = 5
+        blursize: int = 2
 ):
     if replacewith == 'solid':
         cv2.rectangle(frame, (x1, y1), (x2, y2), ovcolor, -1)
     elif replacewith == 'blur':
-        bf = blursize  # blur factor (number of pixels in each dimension that the face will be reduced to)
+        bf = int(blursize)  # blur factor (number of pixels in each dimension that the face will be reduced to)
         blurred_box =  cv2.blur(
             frame[y1:y2, x1:x2],
             (abs(x2 - x1) // bf, abs(y2 - y1) // bf)
@@ -441,8 +441,8 @@ def main():
                 enable_preview=enable_preview,
                 keep_metadata=keep_metadata,
                 replaceimg=replaceimg,
-                mosaicsize=mosaicsize
-                blursize=blursize,
+                mosaicsize=mosaicsize,
+                blursize=blursize
             )
         elif filetype is None:
             print(f'Can\'t determine file type of file {ipath}. Skipping...')
