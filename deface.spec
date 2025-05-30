@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-a = Analysis(['deface/deface.py'],
-             pathex=['/home/m4/dev/deface'],
+a = Analysis(['defacex/defacex.py'],
+             pathex=['/home/m4/dev/defacex'],
              binaries=[],
-             datas=[('deface/centerface.onnx', 'deface')],
+             datas=[('defacex/centerface.onnx', 'defacex')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -23,7 +23,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='deface',
+          name='defacex',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
