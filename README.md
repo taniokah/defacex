@@ -2,29 +2,25 @@
 
 (This project is forked from [ORB-HD/deface.](https://github.com/ORB-HD/deface/actions) If you need to control blur, try my project.)
 
-# `deface`: Video anonymization by face detection
+# `defacex`: Video anonymization by face detection
 
-`deface` is a simple command-line tool for automatic anonymization of faces in videos or photos.
+`defacex` is a simple command-line tool for automatic anonymization of faces in videos or photos.
 It works by first detecting all human faces in each video frame and then applying an anonymization filter (blurring or black boxes) on each detected face region.
 By default all audio tracks are discarded as well.
 
 
-Original frame | `deface` output (using default options)
+Original frame | `defacex` output (using default options)
 :--:|:--:
 ![examples/city.jpg](examples/city.jpg) | ![$ deface examples/city.jpg](examples/city_anonymized.jpg)
 
 
 ## Installation
 
-`deface` supports all commonly used operating systems (Linux, Windows, MacOS), but it requires using a command-line shell such as bash. There are currently no plans of creating a graphical user interface.
+`defacex` supports all commonly used operating systems (Linux, Windows, MacOS), but it requires using a command-line shell such as bash. There are currently no plans of creating a graphical user interface.
 
-The recommended way of installing `deface` is via the `pip` package manager. This requires that you have Python 3.6 or later installed on your system. It is recommended to set up and activate a new [virtual environment](https://realpython.com/python-virtual-environments-a-primer/) first. Then you can install the latest release of `deface` and all necessary dependencies by running:
+This requires that you have Python 3.6 or later installed on your system. It is recommended to set up and activate a new [virtual environment](https://realpython.com/python-virtual-environments-a-primer/) first. Then you can install the latest release of `defacex` and all necessary dependencies by running:
 
-    $ python3 -m pip install deface
-
-Alternatively, if you want to use the latest (unreleased) revision directly from GitHub, you can run:
-
-    $ python3 -m pip install 'git+https://github.com/taniokah/deface'
+    $ python3 -m pip install 'git+https://github.com/taniokah/defacex'
 
 This will only install the dependencies that are strictly required for running the tool. If you want to speed up processing by enabling hardware acceleration, you will need to manually install additional packages, see [Hardware acceleration](#hardware-acceleration)
 
